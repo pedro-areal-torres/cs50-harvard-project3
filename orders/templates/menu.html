@@ -1,0 +1,235 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block script %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+{% endblock %}
+
+
+{% block body %}
+
+<body style="overflow-y:scroll;">
+    <header class='text-center' style="background-color: #6E9D4D;" style="width: 100%">
+        <h1 class="display-2 py-4" style="color: #FFC000">Pizzas CS50</h1>
+    </header>
+    <div class="row" style="background-color: #FFC000; margin-top: -9px;">
+        <div style="margin-left: 1%; font-weight: bold"><a href="{% url 'orders' %}">Orders</a></div>
+        <div style="margin-left: 2%;"><a href="{% url 'logout' %}">Logout</a></div>
+    </div>
+    <div>
+        <div class="row" style="width: 100%;">
+            <div id='category' class="list-group text-center" style="width: 100%; background-color:wheat;">
+                <table style="width:20%;">
+                    <tr>
+                        <th colspan="3">
+                            <h1>Regular Pizzas</h1>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Small</td>
+                        <td>Large</td>
+                    </tr>
+                    {% for pizza in regular_pizza %}
+                    {% with categ="RP" %}
+                    <tr>
+                        <td style="width: 40%;">{{pizza.name}}</td>
+                        <td style="width: 30%;">{{pizza.small}}
+                            {% with size="Small" %}
+                            <a href="{% url 'add' categ pizza.name pizza.small size cart price %}"><img class='plus'
+                                    src="{% static 'img/addItem.webp' %}" style="width: 15px;"></a></td>
+                        {% endwith %}
+                        {% with size="Large" %}
+                        <td style="width: 30%;">{{pizza.large}}
+                            <a href="{% url 'add' categ pizza.name pizza.large size cart price %}"><img class='plus'
+                                    src="{% static 'img/addItem.webp' %}" style="width: 15px;"></a></td>
+                        {% endwith %}
+                    </tr>
+                    {% endwith %}
+                    {% endfor %}
+                </table>
+                <hr>
+                <table style="width:20%;">
+                    <tr>
+                        <th colspan="3">
+                            <h1>Sicilian Pizzas</h1>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Small</td>
+                        <td>Large</td>
+                    </tr>
+                    {% for pizza in sicilian_pizza %}
+                    {% with categ="SP" %}
+                    <tr>
+                        <td style="width: 40%;">{{pizza.name}}</td>
+                        <td style="width: 30%;">{{pizza.small}}
+                            {% with size="Small" %}
+                            <a href="{% url 'add' categ pizza.name pizza.small size cart price %}"><img class='plus'
+                                    src="{% static 'img/addItem.webp' %}" style="width: 15px;"></a></td>
+                        {% endwith %}
+                        {% with size="Large" %}
+                        <td style="width: 30%;">{{pizza.large}}
+                            <a href="{% url 'add' categ pizza.name pizza.large size cart price %}"><img class='plus'
+                                    src="{% static 'img/addItem.webp' %}" style="width: 15px;"></a></td>
+                        {% endwith %}
+                    </tr>
+                    {% endwith %}
+                    {% endfor %}
+                </table>
+                <hr>
+                <table style="width:20%; margin-left: 20%; margin-top: -28%">
+                    <tr>
+                        <th>
+                            <h1>Extra Topping</h1>
+                        </th>
+                    </tr>
+                    {% for top in topping %}
+                    <tr>
+                        {% with categ="TOP" %}
+                        {% with size="ND" %}
+                        <td style="width: 30%;">{{top.name}}
+                            <a href="{% url 'add' categ top.name top.price size cart price %}"><img class='plus'
+                                    src="{% static 'img/addItem.webp' %}" style="width: 15px;"></a></td>
+                        {% endwith %}
+                        {% endwith %}
+                    </tr>
+                    {% endfor %}
+                </table>
+                <hr>
+                <table style="width:20%; margin-left: 40%; margin-top: -31%">
+                    <tr>
+                        <th colspan="3">
+                            <h1>Subs</h1>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Small</td>
+                        <td>Large</td>
+                    </tr>
+                    {% for s in sub %}
+                    {% with categ="SUB" %}
+                    <tr>
+                        <td style="width: 40%;">{{s.name}}</td>
+                        <td style="width: 30%;">{{s.small}}
+                            {% with size="Small" %}
+                            <a href="{% url 'add' categ s.name s.small size cart price %}"><img class='plus'
+                                    src="{% static 'img/addItem.webp' %}" style="width: 15px;"></a></td>
+                        {% endwith %}
+                        {% with size="Large" %}
+                        <td style="width: 30%;">{{s.large}}
+                            <a href="{% url 'add' categ s.name s.large size cart price %}"><img class='plus'
+                                    src="{% static 'img/addItem.webp' %}" style="width: 15px;"></a></td>
+                        {% endwith %}
+                    </tr>
+                    {% endwith %}
+                    {% endfor %}
+                </table>
+                <hr>
+                <table style="width:20%; margin-left: 60%; margin-top: -35%;">
+                    <tr>
+                        <th colspan="2">
+                            <h1>Pastas</h1>
+                        </th>
+                    </tr>
+                    {% for p in pasta %}
+                    <tr>
+                        <td style="width: 70%;">{{p.name}}</td>
+                        {% with categ="PASTA" %}
+                        {% with size="ND" %}
+                        <td style="width: 30%;">{{p.price}}
+                            <a href="{% url 'add' categ p.name p.price size cart price %}"><img class='plus'
+                                    src="{% static 'img/addItem.webp' %}" style="width: 15px;"></a></td>
+                        {% endwith %}
+                        {% endwith %}
+                    </tr>
+                    {% endfor %}
+                </table>
+                <hr>
+                <table style="width:20%; margin-left: 60%;">
+                    <tr>
+                        <th colspan="2">
+                            <h1>Salads</h1>
+                        </th>
+                    </tr>
+                    {% for sal in salad %}
+                    <tr>
+                        <td style="width: 40%;">{{sal.name}}</td>
+                        {% with categ="SALAD" %}
+                        {% with size="ND" %}
+                        <td style="width: 30%;">{{sal.price}}
+                            <a href="{% url 'add' categ sal.name sal.price size cart price %}"><img class='plus'
+                                    src="{% static 'img/addItem.webp' %}" style="width: 15px;"></a></td>
+                        {% endwith %}
+                        {% endwith %}
+                    </tr>
+                    {% endfor %}
+                </table>
+                <hr>
+                <table style="width:20%; margin-left: 60%;">
+                    <tr>
+                        <th colspan="3">
+                            <h1>Dinner Platters</h1>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Small</td>
+                        <td>Large</td>
+                    </tr>
+                    {% for dp in dinner_plate %}
+                    {% with categ="DP" %}
+                    <tr>
+                        <td style="width: 40%;">{{dp.name}}</td>
+                        <td style="width: 30%;">{{dp.small}}
+                            {% with size="Small" %}
+                            <a href="{% url 'add' categ dp.name dp.small size cart price %}"><img class='plus'
+                                    src="{% static 'img/addItem.webp' %}" style="width: 15px;"></a></td>
+                        {% endwith %}
+                        {% with size="Large" %}
+                        <td style="width: 30%;">{{dp.large}}
+                            <a href="{% url 'add' categ dp.name dp.large size cart price %}"><img class='plus'
+                                    src="{% static 'img/addItem.webp' %}" style="width: 15px;"></a></td>
+                        {% endwith %}
+                    </tr>
+                    {% endwith %}
+                    {% endfor %}
+                </table>
+            </div>
+            <div id='category' class="list-group text-center" style="width: 100%; background-color:wheat;">
+                <p style="background-color: wheat; color: wheat;">.</p>
+                <p style="background-color: wheat; color: wheat;">.</p>
+                <p style="background-color: wheat; color: wheat;">.</p>
+                <p style="background-color: wheat; color: wheat;">.</p>
+                <p style="background-color: wheat; color: wheat;">.</p>
+            </div>
+            <div style="margin-top: -32%; margin-left: 82%;">
+                <img src="{% static 'img/cart.png' %}" alt="cart" width="50px" style="margin-top: 5px;">
+                <hr>
+                <form id="display-form" action="{% url 'create_order' %}" method="POST">
+                    {% csrf_token %}
+                    <div>
+                        {% if cart %}
+                        <h5>{{ cart }}</h5>
+                        <input type="hidden" class="form-control" name="cart" value="{{ cart }}" />
+
+                        {% endif %}
+                    </div>
+                    <div>
+                        <h2>{{ price }}</h2>
+                        <input type="hidden" class="form-control" name="price" value="{{ price }}" />
+                    </div>
+
+                    <button type="submit" class="btn m-1 w-100" value="Create_order"
+                        style="background-color: #FFC000;">Create Order!</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}

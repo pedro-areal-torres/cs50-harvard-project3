@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% load static %} 
+
+{% block script %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+{% endblock %}
+
+
+{% block body %}
+<body>
+    <header class='text-center' style="background-color: #6E9D4D;" style="width: 100%">
+        <h1 class="display-2 py-4" style="color: #FFC000">Pizzas CS50</h1>
+    </header>
+
+    <main>
+        <div class="centered margin-t">
+            <img src="{% static 'img/pizzaHome.png' %}" alt="pizzaHome" width="400px"
+                style="margin-left: 40%; margin-top: 5px;">
+        </div>
+        <div class='row no-gutters container' style="width: 35%; margin-left: 32%;">
+            <div class='col p-2'>
+                <form id="display-form" action="{% url 'register' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="username" placeholder="Username" required />
+                        <input type="text" class="form-control" name="email" placeholder="Email" style="margin-top: 2px;" required />
+                        <input type="text" class="form-control" name="fname" placeholder="First Name" style="margin-top: 2px;" required />
+                        <input type="text" class="form-control" name="lname" placeholder="Last Name" style="margin-top: 2px;" required />
+                        <input type="password" class="form-control" name="password" placeholder="Password" style="margin-top: 2px;" required />
+                    </div>
+                    <button type="submit" class="btn m-1 w-100" value="Register"
+                        style="background-color: #FFC000;">Register!</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    {% if success_message %}
+    <div class="alert-success">
+        <strong>Success!</strong> {{ success_message }}
+    </div>
+    {% endif %}
+    {% if fail_message %}
+    <div class="alert-danger">
+        <strong>Error!</strong> {{ fail_message }}
+    </div>
+    {% endif %}
+</body>
+{% endblock %}
